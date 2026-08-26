@@ -1,0 +1,31 @@
+base_model: Qwen/Qwen2.5-3B-Instruct
+load_in_4bit: true
+# Path to an SFT adapter if Stage 4 was run, else null to use the base model
+# as both the policy init and the (adapter-disabled) reference.
+sft_adapter: null
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: [q_proj, k_proj, v_proj, o_proj]
+
+dpo:
+  beta: 0.1
+  label_smoothing: 0.0   # >0 enables the conservative cDPO variant
+
+train:
+  data_path: data/train.jsonl
+  output_dir: outputs/dpo
+  lr: 5.0e-5
+  epochs: 1
+  batch_size: 2
+  grad_accum: 8
+  max_len: 1024
+  warmup_ratio: 0.1
+  lr_scheduler: cosine
+  grad_clip: 1.0
+  eval_steps: 50
+  log_every: 10
+  save_every: 100
+  seed: 0
