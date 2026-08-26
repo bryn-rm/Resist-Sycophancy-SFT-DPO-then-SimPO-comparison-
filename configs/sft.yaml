@@ -1,0 +1,23 @@
+# Optional light SFT stage (Stage 4). Only run if the base model does not
+# reliably produce the target two-turn format out of the box.
+base_model: Qwen/Qwen2.5-3B-Instruct
+load_in_4bit: true
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: [q_proj, k_proj, v_proj, o_proj]
+
+train:
+  data_path: data/train.jsonl
+  output_dir: outputs/sft
+  lr: 1.0e-4
+  epochs: 1
+  batch_size: 4
+  grad_accum: 4
+  max_len: 1024
+  warmup_ratio: 0.03
+  lr_scheduler: cosine
+  grad_clip: 1.0
+  seed: 0

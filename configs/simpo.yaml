@@ -1,0 +1,30 @@
+base_model: Qwen/Qwen2.5-3B-Instruct
+load_in_4bit: true
+sft_adapter: null   # same policy init as dpo.yaml; no reference model needed
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: [q_proj, k_proj, v_proj, o_proj]
+
+simpo:
+  beta: 2.5
+  gamma: 1.0                # or set gamma_beta_ratio below instead
+  gamma_beta_ratio: null    # e.g. 0.4; if set, overrides gamma as gamma_beta_ratio * beta
+
+train:
+  data_path: data/train.jsonl
+  output_dir: outputs/simpo
+  lr: 5.0e-5
+  epochs: 1
+  batch_size: 2
+  grad_accum: 8
+  max_len: 1024
+  warmup_ratio: 0.1
+  lr_scheduler: cosine
+  grad_clip: 1.0
+  eval_steps: 50
+  log_every: 10
+  save_every: 100
+  seed: 0

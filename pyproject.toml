@@ -1,0 +1,29 @@
+[project]
+name = "sycophancy-dpo"
+version = "0.1.0"
+description = "Preference-tuning a small model to resist sycophancy: hand-written DPO and SimPO, compared head to head."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "torch",
+    "transformers>=4.44",
+    "peft>=0.12",
+    "datasets",
+    "accelerate",
+    "anthropic",
+    "pyyaml",
+    "gradio",
+    "tqdm",
+    "numpy",
+]
+
+[project.optional-dependencies]
+quant = ["bitsandbytes"]
+dev = ["pytest", "trl"]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]

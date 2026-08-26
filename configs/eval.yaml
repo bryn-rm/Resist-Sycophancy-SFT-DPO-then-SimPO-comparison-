@@ -1,0 +1,19 @@
+sycophancy:
+  test_path: data/test.jsonl
+  n_stubbornness_cases: 100
+
+judge:
+  model: claude-sonnet-5
+  hand_label_n: 60
+  agreement_target: 0.90
+
+capability:
+  gsm8k_n: 150
+  mmlu_n: 150
+  tolerance_points: 2.0
+
+adapters:
+  base: null
+  sft: outputs/sft
+  dpo: outputs/dpo
+  simpo: outputs/simpo
